@@ -1,16 +1,21 @@
-import { useNavigate } from 'react-router-dom';
-import PokerCalPage from '../poker_cal/PokerCalPage';
-import QuotePage from '../quote/QuotePage';
+import { useNavigate } from "react-router-dom";
+import PokerCalPage from "../poker_cal/PokerCalPage";
+import QuotePage from "../quote/QuotePage";
+import { useEffect } from "react";
+import { DataService } from "../../data/DataService";
 
 function HomePage() {
+  useEffect(() => {
+    DataService.fetchWholeUser();
+  }, []);
   return (
     <div
       className="min-w-screen min-h-screen bg-red-800 flex-col justify-center items-center"
       style={{
         backgroundImage: `url("/assets/images/background.png")`,
-        backgroundSize: '100% 100%',
-        backgroundPosition: 'center center',
-        backgroundRepeat: 'no-repeat',
+        backgroundSize: "100% 100%",
+        backgroundPosition: "center center",
+        backgroundRepeat: "no-repeat",
       }}
     >
       <HomeTitle />
@@ -58,7 +63,7 @@ const BasicBtn = ({ name, route }: BasicBtnProps) => {
         movePage(route);
       }}
     >
-      {name ?? ''}
+      {name ?? ""}
     </button>
   );
 };

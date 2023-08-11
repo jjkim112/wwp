@@ -1,7 +1,9 @@
 import { Game, GamePlayerThumb } from "../domain/Game.model";
 import { GameTemplate } from "../domain/GameTemplate.model";
 import { Pub } from "../domain/Pub.model";
+import { User } from "../domain/User.model";
 import { FirebasePub } from "./firebase/FirebasePub";
+import { FirebaseUser } from "./firebase/FirebaseUser";
 
 export class DataService {
   static addPub = async (
@@ -82,9 +84,34 @@ export class DataService {
         date: Date.now(),
         players: players,
       });
+
       return isSuccess;
     } catch (e) {
       console.log(`[DataService] addGame e: ${e}`);
+      return false;
+    }
+  };
+
+  static fetchWholeUser = async (): Promise<User[]> => {
+    try {
+      const users = await FirebaseUser.getWholeUserData();
+
+      console.log("sadasd");
+      console.log(users);
+      return users;
+    } catch (e) {
+      console.log(`[DataService] fetchWholeUser e: ${e}`);
+      return [];
+    }
+  };
+
+  static updateUserInfo = async (userId: string): Promise<boolean> => {
+    try {
+      const isSuccess = await FirebaseUser.updateUser(userId, {
+        nickname: "bigShark",
+      });
+      return isSuccess;
+    } catch (e) {
       return false;
     }
   };
